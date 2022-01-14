@@ -2,7 +2,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
-
+//api
 const config = {
     apiKey: "AIzaSyDdk1XjYjUecHPhCUKK_k9ZM4SfA-HiE1U",
     authDomain: "crwn-db-cbf02.firebaseapp.com",
