@@ -20,19 +20,17 @@ class App extends React.Component {
   componentDidMount() {
     this.unsubscribeFormAuth = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        //firebase code 
+        //firebase code
         const userRef = await createUserProfileDocument(user);
-        userRef.onSnapshot((snapshot)=>{
+        userRef.onSnapshot((snapshot) => {
           this.setState({
-            id:snapshot.id,
-            ...snapshot.data()
-          })
-        
-        })
-
+            currentUser: { id: snapshot.id, ...snapshot.data() },
+          });
+          console.log(this.state);
+        });
       }
-      this.setState({currentUser:user})
-      console.log(this.state)
+      this.setState({ currentUser: user });
+  
     });
   }
 
