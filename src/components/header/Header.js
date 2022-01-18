@@ -18,7 +18,7 @@ const Header = ({currentUser}) => {
         CONTACT
         </Link>
         { 
-            //suth sigout provided by the firebase library 
+            // sigout provided by the firebase library 
             currentUser ? 
             <div className='option' onClick={()=>auth.signOut()}>Sign Out</div>
             :
