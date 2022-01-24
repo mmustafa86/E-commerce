@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import FormInput from "../form-input/FormInput";
 import CustomButton from "../custom-button/Custom-button";
-import { signInWithGoole } from "../../firebase/firebase.utils";
+import { auth,signInWithGoole } from "../../firebase/firebase.utils";
 
 import "./sign-in.styles.scss";
 
@@ -14,9 +14,24 @@ class SignIn extends Component {
     };
   }
 
-  handleSubmit = (event) => {
+  handleSubmit =async  (event) => {
     event.preventDefault();
-    this.state({ email: "", password: "" });
+
+const {email,password}= this.state;
+
+try {
+  await auth.signInWithEmailAndPassword(email,password);
+
+  this.state({ email: "", password: "" });
+
+}catch (error){
+console.log(error);
+
+}
+
+
+
+
   };
   // we dont write separate function for email and password we set the name dynamic
   handleChang = (event) => {
