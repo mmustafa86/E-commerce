@@ -1,5 +1,7 @@
 import React from "react";
 import "./App.css";
+import { connect } from "react-redux";
+import setCurrentUser from "./redux/user/user.action";
 import { Route, Switch } from "react-router";
 import HomePage from "./pages/homepage/HomePage";
 import ShopPage from "./pages/shop/Shop";
@@ -8,29 +10,21 @@ import SignInAndSignUp from "./pages/sign-in-and-sign-up/SignInAndSignUp";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      currentUser: null,
-    };
-  }
   unsubscribeFormAuth = null;
 
   componentDidMount() {
+    const { setCurrentUser } = this.props;
     this.unsubscribeFormAuth = auth.onAuthStateChanged(async (user) => {
       if (user) {
         //firebase code
         const userRef = await createUserProfileDocument(user);
         userRef.onSnapshot((snapshot) => {
-          this.setState({
+          setCurrentUser({
             currentUser: { id: snapshot.id, ...snapshot.data() },
           });
-        
         });
       }
-      this.setState({ currentUser: user });
-  
+      setCurrentUser(user);
     });
   }
 
@@ -41,7 +35,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/shop" component={ShopPage} />
@@ -51,4 +45,9 @@ class App extends React.Component {
     );
   }
 }
-export default App;
+
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(App);
