@@ -7,6 +7,7 @@ import HomePage from "./pages/homepage/HomePage";
 import ShopPage from "./pages/shop/Shop";
 import Header from "./components/header/Header";
 import SignInAndSignUp from "./pages/sign-in-and-sign-up/SignInAndSignUp";
+import CheckoutPage from "./pages/checkout/Checkout"
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 class App extends React.Component {
@@ -39,6 +40,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/shop" component={ShopPage} />
+          <Route exact path="/checkout" component={CheckoutPage} />
           <Route exact path="/signin" render={()=> this.props.currentUser ? (<Redirect to='/'/>): (< SignInAndSignUp/>)} />
         </Switch>
       </div>
